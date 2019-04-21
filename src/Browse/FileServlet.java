@@ -41,9 +41,9 @@ public class FileServlet extends HttpServlet {
                 List<String> list = new ArrayList<String>();
                 list = getChildren(dir);
 
-                out.println("<!DOCTYPE HTML><head><title>"+"目录浏览"+"</title></head><body>");
-                out.println("目录:"+dir+"<br>");
-                out.println("服务器:"+server+"<br>");
+                out.println("<!DOCTYPE HTML><head><title>"+dir+"</title></head><body>");
+//                out.println("目录:"+dir+"<br>");
+//                out.println("服务器:"+server+"<br>");
 
                 for(String item : list){
                     String fileName = item.substring(item.lastIndexOf("/")+1);
