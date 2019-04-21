@@ -28,14 +28,12 @@ public class FileServlet extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8");
 
                 StringBuffer url = request.getRequestURL();
-                String dir = "";
-                String server = "";
                 int i =0;
-                for(int j=0;j<4&&i<url.length()-2;i++) {
+                for(int j=0;j<4&&i<url.length();i++) {
                     if(url.charAt(i)=='/') j++;
                 }
-                dir = url.substring(i-1);
-                server = url.substring(0,i);
+                String dir = url.substring(i-1);
+                String server = url.substring(0,i);
 
 
                 PrintWriter out = response.getWriter();
