@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletContext;
 import javax.servlet.RequestDispatcher;
 
 
@@ -19,6 +20,13 @@ public class DownloadFile extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
             throws IOException,ServletException{
+
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        ServletContext sc = getServletContext();
+        StringBuffer reqURL = request.getRequestURL();
+        System.out.println(reqURL);
 
     }
 }

@@ -35,24 +35,14 @@ public class FileServlet extends HttpServlet {
                 String dir = url.substring(i-1);
                 String server = url.substring(0,i);
 
-
-                PrintWriter out = response.getWriter();
-
-                List<String> list = new ArrayList<String>();
-                list = getChildren(dir);
-
-                out.println("<!DOCTYPE HTML><head><title>"+dir+"</title></head><body>");
-//                out.println("目录:"+dir+"<br>");
-//                out.println("服务器:"+server+"<br>");
-
-                for(String item : list){
-                    String fileName = item.substring(item.lastIndexOf("/")+1);
-                    out.println("<a href="+server+item.substring(1)+">");
-                    out.println(fileName);
-                    out.println("</a><br>");
+                File type = new File(dir);
+                if(type.isDirectory()){
+                    Show(dir,server,response);
+                }
+                else{
+                    Download(dir,response);
                 }
 
-                out.println("</body></html>");
 
         }
 
@@ -68,6 +58,45 @@ public class FileServlet extends HttpServlet {
             }
 
             else return null;
+        }
+
+        private static void Show(String dir,String server,HttpServletResponse response) throws IOException{
+            PrintWriter out = response.getWriter();
+
+            List<String> list = new ArrayList<String>();
+            list = getChildren(dir);
+
+            out.println("<!DOCTYPE HTML><head><title>"+dir+"</title></head><body>");
+//                out.println("目录:"+dir+"<br>");
+//                out.println("服务器:"+server+"<br>");
+
+            for(String item : list){
+                String fileName = item.substring(item.lastIndexOf("/")+1);
+                out.println("<a href="+server+item.substring(1)+">");
+                out.println(fileName);
+                out.println("</a><br>");
+            }
+
+            out.println("</body></html>");
+
+        }
+
+        private static void Download(String dir,HttpServletResponse response) throws IOException {
+            String filename = dir.substring(dir.lastIndexOf("/")+1);
+            System.out.println(dir);
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition","attachment;filename="+filename);
+            OutputStream os = response.getOutputStream();
+            InputStream is = new FileInputStream(new File(dir));
+            byte[] bytearrays = new byte[1024];
+            int byteread = 0;
+            while((byteread=is.read(bytearrays))!=-1){
+                os.write(bytearrays,0,byteread);
+            }
+            os.flush();
+            is.close();
+
+
         }
 }
 
