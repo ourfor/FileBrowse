@@ -72,7 +72,7 @@ public class FileServlet extends HttpServlet {
 
             for(String item : list){
                 String fileName = item.substring(item.lastIndexOf("/")+1);
-                out.println("<a href="+server+item.substring(1)+">");
+                out.println("<a href='"+server+item+"' >");
                 out.println(fileName);
                 out.println("</a><br>");
             }
