@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 )
 public class FileServlet extends HttpServlet {
         private static final long serialVersionUID = 1L;
+        private static String BaseUrl = "/Users/sagit";
         protected void doGet(HttpServletRequest request,
                              HttpServletResponse response)
                 throws IOException,ServletException{
@@ -33,9 +34,10 @@ public class FileServlet extends HttpServlet {
                     if(url.charAt(i)=='/') j++;
                 }
                 String dir = url.substring(i-1);
+                dir = dir.replaceAll("%20","\\ ");
                 String server = url.substring(0,i);
 
-                File type = new File(dir);
+                File type = new File(BaseUrl+dir);
                 if(type.isDirectory()){
                     Show(dir,server,response);
                 }
@@ -64,15 +66,18 @@ public class FileServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             List<String> list = new ArrayList<String>();
-            list = getChildren(dir);
+            list = getChildren(BaseUrl+dir);
+            System.out.println("当前请求文件为:"+BaseUrl+dir);
 
             out.println("<!DOCTYPE HTML><head><title>"+dir+"</title></head><body>");
 //                out.println("目录:"+dir+"<br>");
 //                out.println("服务器:"+server+"<br>");
 
             for(String item : list){
+                item=item.substring(BaseUrl.length());
+                System.out.println(item);
                 String fileName = item.substring(item.lastIndexOf("/")+1);
-                out.println("<a href='"+server+item+"' >");
+                out.println("<a href='"+server+item.substring(1)+"' >");
                 out.println(fileName);
                 out.println("</a><br>");
             }
