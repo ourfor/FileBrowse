@@ -2,6 +2,7 @@ package Browse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLDecoder;
 
 
 @WebServlet(
@@ -27,7 +29,6 @@ public class FileServlet extends HttpServlet {
 
                 request.setCharacterEncoding("UTF-8");
                 response.setCharacterEncoding("UTF-8");
-                response.setContentType("text/html;charset=UTF-8");
 
                 StringBuffer url_ori = request.getRequestURL();
                 System.out.println("原请求的URL为:"+url_ori);
@@ -40,7 +41,8 @@ public class FileServlet extends HttpServlet {
                     if(url.charAt(i)=='/') j++;
                 }
                 String dir = url.substring(i-1);
-                dir = dir.replaceAll("%20","\\ ");
+                //url转义
+                dir = URLDecoder.decode(dir,"UTF-8");
                 dir = dir.replaceAll(" ","\\ ");
                 String server = url.substring(0,i);
 
@@ -77,6 +79,8 @@ public class FileServlet extends HttpServlet {
             list = getChildren(BaseUrl+dir);
             System.out.println("当前请求文件为:"+BaseUrl+dir);
 
+            response.setContentType("text/html;charset=UTF-8");
+
             out.println("<!DOCTYPE HTML><head><title>"+dir.replaceFirst(ProjectName,"")+"</title></head><body>");
 //                out.println("目录:"+dir+"<br>");
 //                out.println("服务器:"+server+"<br>");
@@ -102,10 +106,14 @@ public class FileServlet extends HttpServlet {
             dir = BaseUrl + dir;
             System.out.println("请求的文件路径为:"+dir);
             response.setContentType("application/zip");
-            response.setHeader("Content-Disposition","attachment;filename="+filename);
+            response.setHeader("Content-Disposition","attachment;filename="+URLEncoder.encode(filename,"UTF-8"));
+
+            //查看文件名
+            System.out.println("下载的文件名为:"+filename);
+
             OutputStream os = response.getOutputStream();
             InputStream is = new FileInputStream(new File(dir));
-            byte[] bytearrays = new byte[1024];
+            byte[] bytearrays = new byte[8192];
             int byteread = 0;
             while((byteread=is.read(bytearrays))!=-1){
                 os.write(bytearrays,0,byteread);
