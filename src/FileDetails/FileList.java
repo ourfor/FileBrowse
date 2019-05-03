@@ -5,21 +5,17 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class FileList {
-    private Map<String,Details> list = new HashMap<String,Details>();
+    private List<Details> list = new ArrayList<Details>();
 
-    public Map<String, Details> getList() {
+    public List<Details> getList() {
         return list;
     }
 
-    public void setList(Map<String, Details> list) {
+    public void setList(List<Details> list) {
         this.list = list;
     }
 
-    public void add(String filename, Details details){
-        list.put(filename,details);
-    }
-
-    public Details get(String filename){
-        return list.get(filename);
+    public void add(Details e){
+        list.add(e);
     }
 }

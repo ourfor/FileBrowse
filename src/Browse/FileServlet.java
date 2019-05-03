@@ -16,16 +16,17 @@ import FileDetails.Details;
 import FileDetails.FileList;
 
 
-@WebServlet(
-        name="browse",
-        urlPatterns={
-                "/*"
-        }
-)
+//@WebServlet(
+//        name="browse",
+//        urlPatterns={
+//                "/*"
+//        }
+//)
 public class FileServlet extends HttpServlet {
         private static final long serialVersionUID = 1L;
-        private static String BaseUrl = "/var/www/file";
-        private static String ProjectName = "FileBrowse/";
+        private static String BaseUrl = "/Users/sagit";
+        private static String ProjectName = "FileBrowse_war_exploded/";
+        private static FileList fl = null;
         protected void doGet(HttpServletRequest request,
                              HttpServletResponse response)
                 throws IOException,ServletException{
@@ -36,7 +37,7 @@ public class FileServlet extends HttpServlet {
                 StringBuffer url_ori = request.getRequestURL();
                 System.out.println("原请求的URL为:"+url_ori);
                 String url_dirty = url_ori.toString();
-                String url = url_dirty.replaceFirst("FileBrowse/","");
+                String url = url_dirty.replaceFirst(ProjectName,"");
 
                 System.out.println("处理以后的请求URL为:"+url);
                 int i =0;
@@ -52,69 +53,81 @@ public class FileServlet extends HttpServlet {
                 File type = new File(BaseUrl+dir);
                 System.out.println("查看路径:"+BaseUrl+dir+"的文件类型");
 
-                request.setAttribute("Title",dir);
-                RequestDispatcher rd = request.getRequestDispatcher("/main.jsp");
-                rd.forward(request,response);
 
 
                 if(type.isDirectory()){
-                    Show(dir,server,response);
+//                    Show(dir,server,response);
+                    fl = getChildren(BaseUrl + dir);
+                    List<Details> fd = fl.getList();
+                    request.setAttribute("FileList",fd);
                 }
                 else{
                     Download(dir,response);
                 }
 
+                request.setAttribute("Title",dir);
+                request.setAttribute("server",server);
+                request.setAttribute("project",ProjectName);
+                RequestDispatcher rd = request.getRequestDispatcher("/main.jsp");
+                rd.forward(request,response);
+
 
         }
 
-        private static List<String> getChildren(String path){
+        private static FileList getChildren(String path){
             File file = new File(path);
             //实例化一个用于存储当前请求目录的文件的基本信息
             FileList fl = new FileList();
 
             if(file.isDirectory()){
                 List<String> list = new ArrayList<String>();
-                java.text.SimpleDateFormat sf = new java.text.SimpleDateFormat("yyyy-MM-dd- HH:mm:ss");
+                java.text.SimpleDateFormat sf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 File[] fileList = file.listFiles();
                 for(File item : fileList){
-                    String filename = item.toString();
-                    String changetime = sf.format(item.lastModified());
-                    String filesize = Long.toString(item.length());
-                    Details dl = new Details(filename,changetime,filesize,item.isDirectory());
-                    fl.add(filename,dl);
+                    String fullPath = item.toString();
+                    String name = fullPath.substring(path.length());
+                    if(name.startsWith("/")) name=name.substring(1);
+                    fullPath = fullPath.substring(BaseUrl.length()+1);
+                    System.out.println(name);
+                    String change = sf.format(item.lastModified());
+                    String size = Long.toString(item.length());
+                    Details dl = new Details(name,fullPath,change,size,item.isDirectory());
+                    fl.add(dl);
                     list.add(item.toString());
                 }
-                return list;
+
+//                return list;
+                return fl;
             }
 
             else return null;
         }
 
-        private static void Show(String dir,String server,HttpServletResponse response) throws IOException{
-            PrintWriter out = response.getWriter();
-
-            List<String> list = new ArrayList<String>();
-            list = getChildren(BaseUrl+dir);
-            System.out.println("当前请求文件为:"+BaseUrl+dir);
-
-            response.setContentType("text/html;charset=UTF-8");
-
-            out.println("<!DOCTYPE HTML><head><title>"+dir.replaceFirst(ProjectName,"")+"</title></head><body>");
-//                out.println("目录:"+dir+"<br>");
-//                out.println("服务器:"+server+"<br>");
-
-            for(String item : list){
-                item=item.substring(BaseUrl.length());
-                System.out.println(item);
-                String fileName = item.substring(item.lastIndexOf("/")+1);
-                out.println("<a href='"+server+item.substring(1)+"' >");
-                out.println(fileName);
-                out.println("</a><br>");
-            }
-
-            out.println("</body></html>");
-
-        }
+//        private static void Show(String dir,String server,HttpServletResponse response) throws IOException{
+//            PrintWriter out = response.getWriter();
+//
+//            List<String> list = new ArrayList<String>();
+//            fl = getChildren(BaseUrl+dir);
+//            System.out.println("当前请求文件为:"+BaseUrl+dir);
+//
+//            response.setContentType("text/html;charset=UTF-8");
+//
+//            out.println("<!DOCTYPE HTML><head><title>"+dir.replaceFirst(ProjectName,"")+"</title></head><body>");
+////                out.println("目录:"+dir+"<br>");
+////                out.println("服务器:"+server+"<br>");
+//
+//            for(String item : list){
+//                item=item.substring(BaseUrl.length());
+//                System.out.println(item);
+//                String fileName = item.substring(item.lastIndexOf("/")+1);
+//                out.println("<a href='"+server+item.substring(1)+"' >");
+//                out.println(fileName);
+//                out.println("</a><br>");
+//            }
+//
+//            out.println("</body></html>");
+//
+//        }
 
         private static void Download(String dir,HttpServletResponse response) throws IOException {
             dir = dir.replaceFirst(ProjectName,"");
@@ -131,7 +144,7 @@ public class FileServlet extends HttpServlet {
 
             OutputStream os = response.getOutputStream();
             InputStream is = new FileInputStream(new File(dir));
-            byte[] bytearrays = new byte[8192];
+            byte[] bytearrays = new byte[1024];
             int byteread = 0;
             while((byteread=is.read(bytearrays))!=-1){
                 os.write(bytearrays,0,byteread);

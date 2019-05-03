@@ -1,72 +1,94 @@
 package FileDetails;
 
 public class Details {
-    private String FileName;
-    private String ModifyTime;
-    private String FileSize;
-    private String FileType;
+    private String name;
+    private String change;
+    private String size;
+    private String path;
+    private String type;
 
-    public Details(String fileName, String modifyTime, String fileSize,Boolean isDir) {
-        FileName = fileName;
-        ModifyTime = modifyTime;
-        FileSize = fileSize;
-        FileType = getFileType(fileName,isDir);
+    public Details(String name, String path, String change, String size,Boolean isDir) {
+        this.name = name;
+        this.change = change;
+        this.size = size;
+        this.path = path;
+        type = getFileType(name,isDir);
     }
 
-    public String getFileName() {
-        return FileName;
+    public String getPath() {
+        return path;
     }
 
-    public void setFileName(String fileName) {
-        FileName = fileName;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public String getModifyTime() {
-        return ModifyTime;
+    public String getName() {
+        return name;
     }
 
-    public void setModifyTime(String modifyTime) {
-        ModifyTime = modifyTime;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFileSize() {
-        return FileSize;
+    public String getChange() {
+        return change;
     }
 
-    public void setFileSize(String fileSize) {
-        FileSize = fileSize;
+    public void setChange(String change) {
+        this.change = change;
     }
 
-    public String getFileType() {
-        return FileType;
+    public String getSize() {
+        return size;
     }
 
-    public void setFileType(String fileType) {
-        FileType = fileType;
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    private static String getFileType(String fileName,Boolean dir){
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    private static String getFileType(String fileName, Boolean dir){
         int index = fileName.lastIndexOf(".");
         Boolean hasExt = (index!=-1)? Boolean.TRUE:Boolean.FALSE;
         String extension = fileName.substring(index+1);
 
-        if(dir) return "directory";
+        if(dir) return "folder-o";
 
         //如果是文件而不是目录的话
         switch(extension){
             case "mkv":
             case "mp4":
-                return "video";
+                return "file-video-o";
             case "mp3":
-                return "audio";
+                return "file-audio-o";
             case "txt":
-                return "text";
+                return "file-text-o";
+            case "jpg":
+            case "png":
+            case "svg":
+            case "ico":
+                return "file-image-o";
+            case "zip":
+            case "tar":
+            case "gz":
+            case "7z":
+                return "file-archive-o";
             case "doc":
-                return "doc";
+                return "file-word-o";
             case "xls":
-                return "excel";
+                return "file-excel-o";
             case "ppt":
-                return "powerpoint";
+                return "file-powerpoint-o";
+            case "pdf":
+                return "file-pdf-o";
             default:
                 return "file";
 

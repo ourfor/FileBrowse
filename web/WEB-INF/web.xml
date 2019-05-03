@@ -7,8 +7,21 @@
         <servlet-name>MainJsp</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>all</servlet-name>
+        <servlet-class>Browse.FileServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainJsp</servlet-name>
         <url-pattern>/main.jsp</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>all</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+
 </web-app>
