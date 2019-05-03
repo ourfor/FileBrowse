@@ -5,12 +5,15 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
+import FileDetails.Details;
+import FileDetails.FileList;
 
 
 @WebServlet(
@@ -48,6 +51,12 @@ public class FileServlet extends HttpServlet {
 
                 File type = new File(BaseUrl+dir);
                 System.out.println("查看路径:"+BaseUrl+dir+"的文件类型");
+
+                request.setAttribute("Title",dir);
+                RequestDispatcher rd = request.getRequestDispatcher("/main.jsp");
+                rd.forward(request,response);
+
+
                 if(type.isDirectory()){
                     Show(dir,server,response);
                 }
@@ -60,10 +69,19 @@ public class FileServlet extends HttpServlet {
 
         private static List<String> getChildren(String path){
             File file = new File(path);
+            //实例化一个用于存储当前请求目录的文件的基本信息
+            FileList fl = new FileList();
+
             if(file.isDirectory()){
                 List<String> list = new ArrayList<String>();
+                java.text.SimpleDateFormat sf = new java.text.SimpleDateFormat("yyyy-MM-dd- HH:mm:ss");
                 File[] fileList = file.listFiles();
                 for(File item : fileList){
+                    String filename = item.toString();
+                    String changetime = sf.format(item.lastModified());
+                    String filesize = Long.toString(item.length());
+                    Details dl = new Details(filename,changetime,filesize,item.isDirectory());
+                    fl.add(filename,dl);
                     list.add(item.toString());
                 }
                 return list;

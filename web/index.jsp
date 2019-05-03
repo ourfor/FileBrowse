@@ -7,26 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page pageEncoding="UTF-8" %>
-<%@
-        page import="RequestPath.RequestDirectory"
-             import="ListFile.Files"
-%>
-<%@ page import="RequestPath.FileList" %>
-<%!
-    private RequestDirectory reqDir = new RequestDirectory();
-    private String dir = "";
-    private FileList fl = new FileList();
-%>
-<%
-    dir = reqDir.getDirectory(request);
-    request.setAttribute("Title",dir);
-    fl.getFileLists(dir);
-
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE HTML>
 <html>
   <head>
     <title>${requestScope.Title}</title>
   </head>
   <body>
+  <c:out value = "${requestScope.Title}" default="目录浏览" />
   </body>
 </html>
