@@ -16,12 +16,11 @@
     <title>${requestScope.Title}</title>
     <link rel="shortcut icon" href="lib/image/favicon.png" />
     <link href="lib/css/ionicons.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="lib/css/index.css" />
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
   </head>
   <body>
   <h4><c:out value = "${requestScope.Title}" default="目录浏览" /></h4>
-  <br>
   <section class="container">
   <table>
     <tr>
