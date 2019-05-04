@@ -22,4 +22,6 @@
 
 - taglib需要的jar包不要添加到运行时的路径里面，即不要添加到` classpath `
 - filename中文乱码，这需要使用` java.net.URLEncoder`来讲字符转化为` UTF-8 `格式
+- 如果没有使用代理的话，jsp里面的链接需要加上` ${project} `
+- 静态web资源使用tomcat提供的` default `Servlet来进行拦截
 

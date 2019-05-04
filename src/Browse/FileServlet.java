@@ -14,18 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
 import FileDetails.Details;
 import FileDetails.FileList;
+import FileDetails.FileSize;
 
 
-//@WebServlet(
-//        name="browse",
-//        urlPatterns={
-//                "/*"
-//        }
-//)
 public class FileServlet extends HttpServlet {
         private static final long serialVersionUID = 1L;
-        private static String BaseUrl = "/Users/sagit";
-        private static String ProjectName = "FileBrowse_war_exploded/";
+        private static String BaseUrl = "/var/www/file";
+        private static String ProjectName = "FileBrowse/";
         private static FileList fl = null;
         protected void doGet(HttpServletRequest request,
                              HttpServletResponse response)
@@ -90,7 +85,7 @@ public class FileServlet extends HttpServlet {
                     fullPath = fullPath.substring(BaseUrl.length()+1);
                     System.out.println(name);
                     String change = sf.format(item.lastModified());
-                    String size = Long.toString(item.length());
+                    String size = FileSize.format(item.length());
                     Details dl = new Details(name,fullPath,change,size,item.isDirectory());
                     fl.add(dl);
                     list.add(item.toString());

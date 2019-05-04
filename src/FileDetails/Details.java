@@ -10,7 +10,7 @@ public class Details {
     public Details(String name, String path, String change, String size,Boolean isDir) {
         this.name = name;
         this.change = change;
-        this.size = size;
+        this.size = isDir?"--":size;
         this.path = path;
         type = getFileType(name,isDir);
     }
@@ -60,37 +60,44 @@ public class Details {
         Boolean hasExt = (index!=-1)? Boolean.TRUE:Boolean.FALSE;
         String extension = fileName.substring(index+1);
 
-        if(dir) return "folder-o";
+        if(dir) return "briefcase";
 
         //如果是文件而不是目录的话
         switch(extension){
             case "mkv":
             case "mp4":
-                return "file-video-o";
+                return "film";
             case "mp3":
-                return "file-audio-o";
-            case "txt":
-                return "file-text-o";
+                return "musical-notes";
             case "jpg":
             case "png":
             case "svg":
             case "ico":
-                return "file-image-o";
+                return "images";
             case "zip":
             case "tar":
             case "gz":
             case "7z":
-                return "file-archive-o";
+                return "archive";
             case "doc":
-                return "file-word-o";
+                return "pricetags";
             case "xls":
-                return "file-excel-o";
+                return "pricetags";
             case "ppt":
-                return "file-powerpoint-o";
+                return "pricetags";
             case "pdf":
-                return "file-pdf-o";
+                return "pricetags";
+            case "exe":
+            case "dmg":
+            case "apk":
+            case "rpm":
+            case "deb":
+                return "appstore";
+            case "epub":
+            case "txt":
+                return "bookmarks";
             default:
-                return "file";
+                return "document";
 
         }
     }

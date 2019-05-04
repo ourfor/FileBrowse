@@ -11,6 +11,10 @@
         <servlet-name>all</servlet-name>
         <servlet-class>Browse.FileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>static</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainJsp</servlet-name>
         <url-pattern>/main.jsp</url-pattern>
@@ -22,6 +26,31 @@
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>static</servlet-name>
+        <url-pattern>/lib/image/favicon.png</url-pattern>
+        <url-pattern>/lib/css/index.css</url-pattern>
+        <url-pattern>/lib/css/font-awesome.min.css</url-pattern>
+        <url-pattern>/lib/css/ionicons.min.css</url-pattern>
+        <url-pattern>/lib/css/material-design-iconic-font.min.css</url-pattern>
+        <url-pattern>/lib/fonts/fontawesome-webfont.eot</url-pattern>
+        <url-pattern>/lib/fonts/fontawesome-webfont.ttf</url-pattern>
+        <url-pattern>/lib/fonts/fontawesome-webfont.svg</url-pattern>
+        <url-pattern>/lib/fonts/fontawesome-webfont.woff</url-pattern>
+        <url-pattern>/lib/fonts/fontawesome-webfont.woff2</url-pattern>
+        <url-pattern>/lib/fonts/fontawesome-webfont.otf</url-pattern>
+        <url-pattern>/lib/fonts/Material-Design-Iconic-Font.eot</url-pattern>
+        <url-pattern>/lib/fonts/Material-Design-Iconic-Font.ttf</url-pattern>
+        <url-pattern>/lib/fonts/Material-Design-Iconic-Font.svg</url-pattern>
+        <url-pattern>/lib/fonts/Material-Design-Iconic-Font.woff</url-pattern>
+        <url-pattern>/lib/fonts/Material-Design-Iconic-Font.woff2</url-pattern>
+        <url-pattern>/lib/fonts/Material-Design-Iconic-Font.otf</url-pattern>
+        <url-pattern>/lib/fonts/ionicons.eot</url-pattern>
+        <url-pattern>/lib/fonts/ionicons.ttf</url-pattern>
+        <url-pattern>/lib/fonts/ionicons.svg</url-pattern>
+        <url-pattern>/lib/fonts/ionicons.woff</url-pattern>
+        <url-pattern>/lib/fonts/ionicons.woff2</url-pattern>
     </servlet-mapping>
 
 </web-app>

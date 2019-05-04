@@ -14,23 +14,35 @@
 <html>
   <head>
     <title>${requestScope.Title}</title>
-    <link rel="stylesheet" type="text/css" href="lib/css/font-awesome.min.css" />
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="lib/image/favicon.png" />
+    <link href="lib/css/ionicons.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="lib/css/index.css" />
   </head>
   <body>
-  <c:out value = "${requestScope.Title}" default="目录浏览" />
+  <h4><c:out value = "${requestScope.Title}" default="目录浏览" /></h4>
   <br>
+  <section class="container">
   <table>
+    <tr>
+      <td>
+        <i class="icon ion-ios-folder-open"></i>
+        <a href="${requestScope.server}${requestScope.dir}" >..</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
   <c:forEach var="item" items="${requestScope.FileList}" varStatus="status">
     <tr>
       <td>
-        <i class="fa fa-${item.type} fa-lg"></i>
-        <a href="${requestScope.server}${requestScope.project}${item.path}">${item.name}</a>
+        <i class="icon ion-ios-${item.type}"></i>
+        <a href="${requestScope.server}${item.path}">${item.name}</a>
       </td>
-      <td>${item.change}</td>
-      <td>${item.size}</td>
+      <td class="change">${item.change}</td>
+      <td class="size">${item.size}</td>
     </tr>
   </c:forEach>
   </table>
+  </section>
   </body>
 </html>
