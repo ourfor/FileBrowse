@@ -14,9 +14,14 @@
 <html>
   <head>
     <title>${requestScope.Title}</title>
-    <link rel="shortcut icon" href="lib/image/favicon.png" />
-    <link href="lib/css/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="lib/css/index.css" />
+<%--    获取部署的应用名，如果没有使用代理的话  ${pageContext.request.contextPath}--%>
+    <c:set var="proxy" value="true" />
+    <c:set var="RootPath" value="${pageContext.request.contextPath}" />
+    <c:if test="${proxy}"><c:set var="RootPath" value="" /></c:if>
+
+    <link rel="shortcut icon" href="${RootPath}/lib/image/favicon.png" />
+    <link href="${RootPath}/lib/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${RootPath}/lib/css/index.css" />
     <meta name='viewport' content='width=device-width,initial-scale=1' />
   </head>
   <body>
@@ -25,7 +30,7 @@
   <table>
     <tr>
       <td>
-        <i class="icon ion-ios-folder-open"></i>
+        <i class="icon ion-ios-arrow-dropup"></i>
         <a href="${requestScope.server}${requestScope.dir}" >..</a>
       </td>
       <td></td>

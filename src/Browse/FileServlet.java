@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
+
+import Download.DownloadFile;
 import FileDetails.Details;
 import FileDetails.FileList;
 import FileDetails.FileSize;
@@ -57,7 +59,8 @@ public class FileServlet extends HttpServlet {
                     request.setAttribute("FileList",fd);
                 }
                 else{
-                    Download(dir,response);
+                    DownloadFile df = new DownloadFile(type.getName(),BaseUrl,ProjectName);
+                    df.Download(dir,response);
                 }
 
                 request.setAttribute("Title",dir);
@@ -98,56 +101,7 @@ public class FileServlet extends HttpServlet {
             else return null;
         }
 
-//        private static void Show(String dir,String server,HttpServletResponse response) throws IOException{
-//            PrintWriter out = response.getWriter();
-//
-//            List<String> list = new ArrayList<String>();
-//            fl = getChildren(BaseUrl+dir);
-//            System.out.println("当前请求文件为:"+BaseUrl+dir);
-//
-//            response.setContentType("text/html;charset=UTF-8");
-//
-//            out.println("<!DOCTYPE HTML><head><title>"+dir.replaceFirst(ProjectName,"")+"</title></head><body>");
-////                out.println("目录:"+dir+"<br>");
-////                out.println("服务器:"+server+"<br>");
-//
-//            for(String item : list){
-//                item=item.substring(BaseUrl.length());
-//                System.out.println(item);
-//                String fileName = item.substring(item.lastIndexOf("/")+1);
-//                out.println("<a href='"+server+item.substring(1)+"' >");
-//                out.println(fileName);
-//                out.println("</a><br>");
-//            }
-//
-//            out.println("</body></html>");
-//
-//        }
-
-        private static void Download(String dir,HttpServletResponse response) throws IOException {
-            dir = dir.replaceFirst(ProjectName,"");
-            dir = dir.replaceAll(" ","\\ ");
-
-            String filename = dir.substring(dir.lastIndexOf("/")+1);
-            dir = BaseUrl + dir;
-            System.out.println("请求的文件路径为:"+dir);
-            response.setContentType("application/zip");
-            response.setHeader("Content-Disposition","attachment;filename="+URLEncoder.encode(filename,"UTF-8"));
-
-            //查看文件名
-            System.out.println("下载的文件名为:"+filename);
-
-            OutputStream os = response.getOutputStream();
-            InputStream is = new FileInputStream(new File(dir));
-            byte[] bytearrays = new byte[1024];
-            int byteread = 0;
-            while((byteread=is.read(bytearrays))!=-1){
-                os.write(bytearrays,0,byteread);
-            }
-            os.flush();
-            is.close();
 
 
-        }
 }
 
