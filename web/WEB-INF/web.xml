@@ -24,12 +24,9 @@
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>*.css</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>static</servlet-name>
         <url-pattern>/lib/image/favicon.png</url-pattern>
+        <url-pattern>/lib/js/click.js</url-pattern>
         <url-pattern>/lib/css/index.css</url-pattern>
         <url-pattern>/lib/css/ionicons.min.css</url-pattern>
         <url-pattern>/lib/fonts/ionicons.eot</url-pattern>

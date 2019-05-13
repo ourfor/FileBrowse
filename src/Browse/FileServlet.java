@@ -21,7 +21,7 @@ import FileDetails.FileSize;
 
 public class FileServlet extends HttpServlet {
         private static final long serialVersionUID = 1L;
-        private static String BaseUrl = "/var/www/file";
+        private static String BaseUrl = "/Users/sagit";
         private static String ProjectName = "FileBrowse/";
         private static FileList fl = null;
         protected void doGet(HttpServletRequest request,

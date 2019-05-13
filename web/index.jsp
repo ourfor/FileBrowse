@@ -20,7 +20,7 @@
     <c:if test="${proxy}"><c:set var="RootPath" value="" /></c:if>
 
     <link rel="shortcut icon" href="${RootPath}/lib/image/favicon.png" />
-    <link href="${RootPath}/lib/css/ionicons.min.css" rel="stylesheet">
+    <link href="${RootPath}/lib/css/ionicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="${RootPath}/lib/css/index.css" />
     <meta name='viewport' content='width=device-width,initial-scale=1' />
   </head>
@@ -49,4 +49,5 @@
   </table>
   </section>
   </body>
+<script src="${RootPath}/lib/js/click.js"></script>
 </html>
